@@ -1,6 +1,6 @@
 package library.models;
 
-public enum accessLevel {
+public enum AccessLevel {
     ADMIN,
     USER
 }
