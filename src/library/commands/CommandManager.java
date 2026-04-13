@@ -15,6 +15,8 @@ public class CommandManager {
         commands.put("close", new CloseCommand(storage));
         commands.put("save", new SaveCommand(storage));
         commands.put("save as", new SaveAsCommand(storage));
+        commands.put("login", new LoginCommand(storage));
+        commands.put("logout", new LogoutCommand(storage));
     }
 
     public String process(String line) {

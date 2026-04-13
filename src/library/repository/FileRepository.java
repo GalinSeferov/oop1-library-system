@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class FileRepository {
     private String currentFile;
+    private String loggedUser;
     public String openFile(String path){
         File file = new File(path);
         try{
@@ -54,5 +55,15 @@ public class FileRepository {
     }
     public String getCurrentFile() {
         return currentFile;
+    }
+
+    public void login(String username){
+        this.loggedUser = username;
+    }
+    public void logout(){
+        this.loggedUser = null;
+    }
+    public String getLoggedUser(){
+        return loggedUser;
     }
 }
