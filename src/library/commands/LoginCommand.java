@@ -2,9 +2,7 @@ package library.commands;
 
 import library.repository.FileRepository;
 
-import java.util.Scanner;
-
-public class LoginCommand implements Command{
+public class LoginCommand implements Command {
     private FileRepository storage;
 
     public LoginCommand(FileRepository storage) {
@@ -16,11 +14,13 @@ public class LoginCommand implements Command{
         if (storage.getCurrentFile() == null) {
             return "Error! Please open a file first!";
         }
+
         if (storage.getLoggedUser() != null) {
             return "You are already logged in.";
         }
+
         if (args.length < 3) {
-            return "Error! Usage is login <username> <password>";
+            return "Login requires username and password.";
         }
 
         String user = args[1];
@@ -31,6 +31,6 @@ public class LoginCommand implements Command{
             return "Welcome, " + user + "!";
         }
 
-        return "Error! Invalid username or password!";
+        return "Error: Invalid username or password.";
     }
 }

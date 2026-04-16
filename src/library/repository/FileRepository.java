@@ -1,7 +1,11 @@
 package library.repository;
 
+import library.models.Book;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileRepository {
     private String currentFile;
@@ -65,5 +69,29 @@ public class FileRepository {
     }
     public String getLoggedUser(){
         return loggedUser;
+    }
+
+    private List<Book> books = new ArrayList<>();
+    public void addBook(Book book){
+        books.add(book);
+    }
+    public List<Book> getAllBooks(){
+        return books;
+    }
+
+    private List<String> users = new ArrayList<>(List.of("admin"));
+
+    public void addUser(String username) {
+        users.add(username);
+    }
+
+    public boolean removeUser(String username) {
+        if (username.equals("admin"))
+            return false;
+        return users.remove(username);
+    }
+
+    public boolean userExists(String username) {
+        return users.contains(username);
     }
 }

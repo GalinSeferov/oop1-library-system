@@ -8,8 +8,7 @@ import java.util.Map;
 public class CommandManager {
     private final Map<String, Command> commands = new HashMap<>();
 
-    public CommandManager() {
-        FileRepository storage = new FileRepository();
+    public CommandManager(FileRepository storage) {
         commands.put("help", new HelpCommand());
         commands.put("open", new OpenCommand(storage));
         commands.put("close", new CloseCommand(storage));
@@ -17,22 +16,23 @@ public class CommandManager {
         commands.put("save as", new SaveAsCommand(storage));
         commands.put("login", new LoginCommand(storage));
         commands.put("logout", new LogoutCommand(storage));
+        commands.put("users", new UsersCommand(storage));
+        commands.put("books", new BooksCommand(storage));
     }
 
     public String process(String line) {
-        String[] parts = line.split("\\s+");
-        if (parts.length == 0) return "";
+        String[] parts = line.split(" ", 3);
+
+        if (parts.length == 0 || parts[0].isEmpty()) return "";
 
         String label = parts[0].toLowerCase();
-
         if (label.equals("save") && parts.length > 1 && parts[1].equalsIgnoreCase("as")) {
             label = "save as";
-            String[] newArgs = new String[parts.length - 1];
-            newArgs[0] = "save as";
-            for (int i = 2; i < parts.length; i++) {
-                newArgs[i-1] = parts[i];
+            String path = (parts.length > 2) ? parts[2] : "";
+            Command saveAsCmd = commands.get("save as");
+            if (saveAsCmd != null) {
+                return saveAsCmd.execute(new String[]{"save as", path});
             }
-            parts = newArgs;
         }
 
         Command command = commands.get(label);

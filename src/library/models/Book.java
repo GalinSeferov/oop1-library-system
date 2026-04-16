@@ -60,4 +60,18 @@ public class Book {
     public String getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "author='" + author + '\'' +
+                ", title='" + title + '\'' +
+                ", genre=" + genre +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", publishedYear=" + publishedYear +
+                ", keywords=" + keywords +
+                ", rating=" + rating +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }
