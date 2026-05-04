@@ -21,7 +21,7 @@ public class CommandManager {
     }
 
     public String process(String line) {
-        String[] parts = line.split(" ", 3);
+        String[] parts = line.split(" ", 4);
 
         if (parts.length == 0 || parts[0].isEmpty()) return "";
 

@@ -64,6 +64,7 @@ public class FileRepository {
             if (!file.exists()) {
                 file.createNewFile();
             }
+            this.currentFile = path;
             return "Successfully saved as " + file.getName();
         } catch (IOException e) {
             return "Error! Could not save to the new path!";
