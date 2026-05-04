@@ -2,6 +2,7 @@ package library.commands;
 
 import library.models.Book;
 import library.models.Genre;
+import library.models.AccessLevel;
 import library.repository.FileRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +27,7 @@ public class BooksCommand implements Command {
 
         String action = args[1].toLowerCase();
 
-        if (action.equals("all")) {
+        if (action.equals("all") || action.equals("view")) {
             List<Book> books = storage.getAllBooks();
             if (books.isEmpty()) return "Library is empty.";
             StringBuilder result = new StringBuilder();
@@ -48,8 +49,9 @@ public class BooksCommand implements Command {
             return "Book not found.";
         }
 
-        if (action.equals("find") && args.length > 3) {
+        if (action.equals("find") && args.length > 2) {
             String criterion = args[2].toLowerCase();
+            if (args.length < 4) return "Please provide search term.";
             String searchString = args[3].toLowerCase();
             StringBuilder result = new StringBuilder();
             for (Book b : storage.getAllBooks()) {
@@ -81,7 +83,9 @@ public class BooksCommand implements Command {
         }
 
         if (action.equals("add")) {
-            if (!storage.getLoggedUser().equals("admin")) return "Access denied.";
+            if (storage.getLoggedUserRole() == null || storage.getLoggedUserRole() != AccessLevel.ADMIN) {
+                return "Access denied.";
+            }
             if (args.length < 3) return "No data provided.";
 
             String[] d = args[2].split("\\|", -1);
@@ -93,13 +97,17 @@ public class BooksCommand implements Command {
                 Book nb = new Book(d[0], d[1], genre, d[3], Integer.parseInt(d[4].trim()), keyList, Double.parseDouble(d[6].trim()), d[7]);
                 storage.addBook(nb);
                 return "Book added successfully.";
-            } catch (Exception e) {
-                return "Error: Invalid data format.";
+            } catch (NumberFormatException e) {
+                return "Error: Year and rating must be numbers.";
+            } catch (IllegalArgumentException e) {
+                return "Error: Invalid genre or data format.";
             }
         }
 
         if (action.equals("remove") && args.length > 2) {
-            if (!storage.getLoggedUser().equals("admin")) return "Access denied.";
+            if (storage.getLoggedUserRole() != library.models.AccessLevel.ADMIN) {
+                return "Access denied.";
+            }
             boolean removed = storage.getAllBooks().removeIf(b -> b.getId().equals(args[2]));
             return removed ? "Book removed." : "Book not found.";
         }

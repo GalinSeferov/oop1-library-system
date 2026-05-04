@@ -26,7 +26,7 @@ public class LoginCommand implements Command {
         String user = args[1];
         String pass = args[2];
 
-        if (user.equals("admin") && pass.equals("i<3Java")) {
+        if (storage.authenticate(user, pass)) {
             storage.login(user);
             return "Welcome, " + user + "!";
         }

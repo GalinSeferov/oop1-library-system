@@ -22,9 +22,7 @@ public class Application {
                 System.out.print("Enter username: ");
                 String user = scanner.nextLine();
                 System.out.print("Enter password: ");
-                String pass = scanner.nextLine();
-                for (int i = 0; i < pass.length(); i++) System.out.print("*");
-                System.out.println();
+                String pass = readPassword();
                 System.out.println(manager.process("login " + user + " " + pass));
             }
             else if (line.equalsIgnoreCase("books add")) {
@@ -48,10 +46,31 @@ public class Application {
                 String cmd = "books add " + author + "|" + title + "|" + genre + "|" + desc + "|" + year + "|" + tags + "|" + rating + "|" + id;
                 System.out.println(manager.process(cmd));
             }
+            else if (line.equalsIgnoreCase("users add")) {
+                System.out.print("Username: ");
+                String username = scanner.nextLine();
+                System.out.print("Password: ");
+                String password = readPassword();
+                System.out.print("Role (ADMIN/USER): ");
+                String role = scanner.nextLine();
+
+                String cmd = "users add " + username + "|" + password + "|" + role;
+                System.out.println(manager.process(cmd));
+            }
             else {
                 System.out.println(manager.process(line));
             }
         }
         scanner.close();
+    }
+
+    private static String readPassword() {
+        try {
+            if (System.console() != null) {
+                return new String(System.console().readPassword());
+            }
+        } catch (Exception e) {
+        }
+        return new Scanner(System.in).nextLine();
     }
 }
