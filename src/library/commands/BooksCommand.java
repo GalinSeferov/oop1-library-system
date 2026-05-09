@@ -5,7 +5,6 @@ import library.models.Genre;
 import library.models.AccessLevel;
 import library.repository.FileRepository;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BooksCommand implements Command {
@@ -50,9 +49,10 @@ public class BooksCommand implements Command {
         }
 
         if (action.equals("find") && args.length > 2) {
-            String criterion = args[2].toLowerCase();
-            if (args.length < 4) return "Please provide search term.";
-            String searchString = args[3].toLowerCase();
+            String[] findParts = args[2].split(" ", 2);
+            if (findParts.length < 2) return "Please provide search term.";
+            String criterion = findParts[0].toLowerCase();
+            String searchString = findParts[1].toLowerCase();
             StringBuilder result = new StringBuilder();
             for (Book b : storage.getAllBooks()) {
                 boolean match = false;
@@ -65,8 +65,9 @@ public class BooksCommand implements Command {
         }
 
         if (action.equals("sort") && args.length > 2) {
-            String option = args[2].toLowerCase();
-            boolean asc = args.length <= 3 || !args[3].equalsIgnoreCase("desc");
+            String[] sortParts = args[2].split(" ", 2);
+            String option = sortParts[0].toLowerCase();
+            boolean asc = sortParts.length < 2 || !sortParts[1].equalsIgnoreCase("desc");
             List<Book> sorted = new ArrayList<>(storage.getAllBooks());
             for (int i = 1; i < sorted.size(); i++) {
                 Book key = sorted.get(i);
@@ -92,20 +93,36 @@ public class BooksCommand implements Command {
             if (d.length < 8) return "Error: Incomplete data.";
 
             try {
+                if (d[0].trim().isEmpty() || d[1].trim().isEmpty() || d[3].trim().isEmpty() ||
+                        d[5].trim().isEmpty() || d[7].trim().isEmpty()) {
+                    return "Error: Some fields are empty!";
+                }
+
                 Genre genre = Genre.valueOf(d[2].toUpperCase().trim());
-                List<String> keyList = Arrays.asList(d[5].split(","));
-                Book nb = new Book(d[0], d[1], genre, d[3], Integer.parseInt(d[4].trim()), keyList, Double.parseDouble(d[6].trim()), d[7]);
+                List<String> keyList = new ArrayList<>();
+                for (String key : d[5].split(",")) {
+                    String trimmedKey = key.trim();
+                    if (!trimmedKey.isEmpty()) {
+                        keyList.add(trimmedKey);
+                    }
+                }
+
+                Book nb = new Book(d[0].trim(), d[1].trim(), genre, d[3].trim(),
+                        Integer.parseInt(d[4].trim()), keyList,
+                        Double.parseDouble(d[6].trim()), d[7].trim());
                 storage.addBook(nb);
                 return "Book added successfully.";
             } catch (NumberFormatException e) {
-                return "Error: Year and rating must be numbers.";
+                return "Error: Year must be a number and rating must be a valid decimal!";
             } catch (IllegalArgumentException e) {
-                return "Error: Invalid genre or data format.";
+                return "Error: Invalid genre!";
+            } catch (Exception e) {
+                return "Error: Invalid data!";
             }
         }
 
         if (action.equals("remove") && args.length > 2) {
-            if (storage.getLoggedUserRole() != library.models.AccessLevel.ADMIN) {
+            if (storage.getLoggedUserRole() != AccessLevel.ADMIN) {
                 return "Access denied.";
             }
             boolean removed = storage.getAllBooks().removeIf(b -> b.getId().equals(args[2]));

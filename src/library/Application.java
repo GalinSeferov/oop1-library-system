@@ -27,21 +27,21 @@ public class Application {
             }
             else if (line.equalsIgnoreCase("books add")) {
                 System.out.print("Author: ");
-                String author = scanner.nextLine();
+                String author = scanner.nextLine().trim();
                 System.out.print("Title: ");
-                String title = scanner.nextLine();
-                System.out.print("Genre: ");
-                String genre = scanner.nextLine();
+                String title = scanner.nextLine().trim();
+                System.out.print("Genre (FANTASY, THRILLER, CLASSIC, SCIFI, HORROR, BIOGRAPHY, OTHER): ");
+                String genre = scanner.nextLine().trim().toUpperCase();
                 System.out.print("Description: ");
-                String desc = scanner.nextLine();
+                String desc = scanner.nextLine().trim();
                 System.out.print("Year: ");
-                String year = scanner.nextLine();
+                String year = scanner.nextLine().trim();
                 System.out.print("Keywords: ");
-                String tags = scanner.nextLine();
+                String tags = scanner.nextLine().trim();
                 System.out.print("Rating: ");
-                String rating = scanner.nextLine();
+                String rating = scanner.nextLine().trim();
                 System.out.print("ID: ");
-                String id = scanner.nextLine();
+                String id = scanner.nextLine().trim();
 
                 String cmd = "books add " + author + "|" + title + "|" + genre + "|" + desc + "|" + year + "|" + tags + "|" + rating + "|" + id;
                 System.out.println(manager.process(cmd));
