@@ -1,5 +1,8 @@
 package library.models;
 
+/**
+ * Supported book genres.
+ */
 public enum Genre {
         FANTASY,
         THRILLER,

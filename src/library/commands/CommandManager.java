@@ -5,9 +5,16 @@ import library.repository.FileRepository;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages all commands and figures out which one to run based on user input.
+ */
 public class CommandManager {
     private final Map<String, Command> commands = new HashMap<>();
 
+    /**
+     * Sets up all the available commands.
+     * @param storage the repository passed to commands that need it
+     */
     public CommandManager(FileRepository storage) {
         commands.put("help", new HelpCommand());
         commands.put("open", new OpenCommand(storage));
@@ -20,6 +27,11 @@ public class CommandManager {
         commands.put("books", new BooksCommand(storage));
     }
 
+    /**
+     * Takes the user input and runs the right command.
+     * @param line the full line the user typed
+     * @return the result message from the command
+     */
     public String process(String line) {
         String[] parts = line.split(" ", 3);
 

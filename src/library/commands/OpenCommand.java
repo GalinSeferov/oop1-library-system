@@ -2,6 +2,9 @@ package library.commands;
 
 import library.repository.FileRepository;
 
+/**
+ * Command to open a library file.
+ */
 public class OpenCommand implements Command{
     private FileRepository storage;
 

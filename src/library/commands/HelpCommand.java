@@ -1,6 +1,14 @@
 package library.commands;
 
+/**
+ * Command to show help information.
+ */
 public class HelpCommand implements Command {
+
+    /**
+     * Shows all the commands that the user can type.
+     * @return string with the help menu.
+     */
     @Override
     public String execute(String[] args) {
         return "The following commands are supported:\n" +

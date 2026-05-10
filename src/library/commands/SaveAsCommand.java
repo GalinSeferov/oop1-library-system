@@ -2,6 +2,10 @@ package library.commands;
 
 import library.repository.FileRepository;
 
+/**
+ * Command to save the current data into a new file.
+ */
+
 public class SaveAsCommand implements Command {
     private FileRepository storage;
 

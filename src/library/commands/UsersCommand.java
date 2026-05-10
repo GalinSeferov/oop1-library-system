@@ -3,13 +3,23 @@ package library.commands;
 import library.models.AccessLevel;
 import library.repository.FileRepository;
 
+/**
+ * Adds and removes users. Admin only.
+ */
 public class UsersCommand implements Command {
     private FileRepository storage;
 
+    /**
+     * @param storage the repository for managing users
+     */
     public UsersCommand(FileRepository storage) {
         this.storage = storage;
     }
 
+    /**
+     * Runs the add or remove user action.
+     * @return result message
+     */
     @Override
     public String execute(String[] args) {
         if (!"admin".equals(storage.getLoggedUser())) {

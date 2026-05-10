@@ -2,13 +2,22 @@ package library.commands;
 
 import library.repository.FileRepository;
 
-public class CloseCommand implements Command{
+/**
+ * Closes the currently open file.
+ */
+public class CloseCommand implements Command {
     private FileRepository storage;
-    public CloseCommand(FileRepository storage){
+
+    /**
+     * @param storage the repository we use to close the file
+     */
+    public CloseCommand(FileRepository storage) {
         this.storage = storage;
     }
 
-
+    /**
+     * Closes the file and returns a message.
+     */
     @Override
     public String execute(String[] args) {
         return storage.closeFile();

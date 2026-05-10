@@ -2,6 +2,9 @@ package library.commands;
 
 import library.repository.FileRepository;
 
+/**
+ * Command for user login.
+ */
 public class LoginCommand implements Command {
     private FileRepository storage;
 

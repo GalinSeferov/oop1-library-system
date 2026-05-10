@@ -2,6 +2,10 @@ package library.commands;
 
 import library.repository.FileRepository;
 
+/**
+ * Command to save changes to the currently open file.
+ */
+
 public class SaveCommand implements Command {
     private FileRepository storage;
 

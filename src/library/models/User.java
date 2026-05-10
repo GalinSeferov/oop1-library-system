@@ -1,10 +1,16 @@
 package library.models;
 
+/**
+ * Class for a system user.
+ */
 public class User {
     private String username;
     private String password;
     private AccessLevel accessLevel;
 
+    /**
+     * Constructor for the User class.
+     */
     public User(String username, String password, AccessLevel accessLevel) {
         this.username = username;
         this.password = password;

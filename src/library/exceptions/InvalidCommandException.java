@@ -1,8 +1,14 @@
 package library.exceptions;
 
+/**
+ * Thrown when the user types an invalid command.
+ */
 public class InvalidCommandException extends RuntimeException {
-    public InvalidCommandException(String message) {
 
+    /**
+     * @param message error message
+     */
+    public InvalidCommandException(String message) {
         super(message);
     }
 }

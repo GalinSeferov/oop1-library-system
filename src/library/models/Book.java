@@ -3,6 +3,10 @@ package library.models;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Model class representing a book in the library.
+ */
+
 public class Book {
     private String author;
     private String title;
@@ -13,6 +17,9 @@ public class Book {
     private double rating;
     private String id;
 
+    /**
+     * Constructor for the Book class.
+     */
     public Book(String author, String title, Genre genre, String shortDescription, int publishedYear, List<String> keywords, double rating, String id){
 
             if(publishedYear > 2026){

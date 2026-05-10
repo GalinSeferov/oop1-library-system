@@ -7,13 +7,28 @@ import library.repository.FileRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles all book-related commands like add, remove, find, sort and view.
+ */
+
 public class BooksCommand implements Command {
     private FileRepository storage;
+
+    /**
+     * Constructor that takes the storage so we can work with the books.
+     *
+     * @param storage where all the books are stored
+     */
 
     public BooksCommand(FileRepository storage) {
         this.storage = storage;
     }
 
+    /**
+     * Executes a book command based on the given arguments.
+     *
+     * @return a message with the result of the command
+     */
     @Override
     public String execute(String[] args) {
         if (storage.getLoggedUser() == null) {
@@ -131,6 +146,16 @@ public class BooksCommand implements Command {
 
         return "Invalid command.";
     }
+
+    /**
+     * Compares two books by a given field for sorting.
+     *
+     * @param b1 first book
+     * @param b2 second book
+     * @param option field to compare by (title, author, year, rating)
+     * @param asc true for ascending, false for descending
+     * @return negative, zero, or positive number based on the comparison
+     */
 
     private int compareInternal(Book b1, Book b2, String option, boolean asc) {
         int res = 0;

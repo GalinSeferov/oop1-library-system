@@ -2,6 +2,9 @@ package library.commands;
 
 import library.repository.FileRepository;
 
+/**
+ * Command for logging out of the system.
+ */
 public class LogoutCommand implements Command {
     private FileRepository storage;
 

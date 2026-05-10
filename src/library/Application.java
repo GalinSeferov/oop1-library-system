@@ -5,7 +5,14 @@ import library.models.AccessLevel;
 import library.repository.FileRepository;
 import java.util.Scanner;
 
+/**
+ * The main class of the library system.
+ */
 public class Application {
+
+    /**
+     * Starts the program and waits for user input.
+     */
     public static void main(String[] args) {
         FileRepository storage = new FileRepository();
         CommandManager manager = new CommandManager(storage);
@@ -72,7 +79,10 @@ public class Application {
         }
         scanner.close();
     }
-
+    /**
+     * Reads a password without showing it on screen.
+     * @return the password the user typed
+     */
     private static String readPassword() {
         try {
             if (System.console() != null) {
