@@ -1,5 +1,7 @@
 package library.commands;
 
+import library.exceptions.InvalidCommandException;
+import library.exceptions.NoPermissionException;
 import library.repository.FileRepository;
 
 import java.util.HashMap;
@@ -49,7 +51,13 @@ public class CommandManager {
 
         Command command = commands.get(label);
         if (command != null) {
-            return command.execute(parts);
+            try {
+                return command.execute(parts);
+            } catch (NoPermissionException e) {
+                return e.getMessage();
+            } catch (InvalidCommandException e) {
+                return e.getMessage();
+            }
         }
         return "Error: Unknown command!";
     }

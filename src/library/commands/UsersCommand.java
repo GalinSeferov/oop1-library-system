@@ -1,5 +1,7 @@
 package library.commands;
 
+import library.exceptions.InvalidCommandException;
+import library.exceptions.NoPermissionException;
 import library.models.AccessLevel;
 import library.repository.FileRepository;
 
@@ -23,11 +25,11 @@ public class UsersCommand implements Command {
     @Override
     public String execute(String[] args) {
         if (!"admin".equals(storage.getLoggedUser())) {
-            return "Access denied.";
+            throw new NoPermissionException("Access denied.");
         }
 
         if (args.length < 2) {
-            return "Invalid command.";
+            throw new InvalidCommandException("Invalid command.");
         }
 
         String action = args[1].toLowerCase();
@@ -58,6 +60,6 @@ public class UsersCommand implements Command {
             return removed ? "User removed." : "User not found or cannot be removed.";
         }
 
-        return "Invalid command.";
+        throw new InvalidCommandException("Invalid command.");
     }
 }

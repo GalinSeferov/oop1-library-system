@@ -1,5 +1,7 @@
 package library.commands;
 
+import library.exceptions.InvalidCommandException;
+import library.exceptions.NoPermissionException;
 import library.models.Book;
 import library.models.Genre;
 import library.models.AccessLevel;
@@ -36,7 +38,7 @@ public class BooksCommand implements Command {
         }
 
         if (args.length < 2) {
-            return "Invalid command.";
+            throw new InvalidCommandException("Invalid command.");
         }
 
         String action = args[1].toLowerCase();
@@ -100,7 +102,7 @@ public class BooksCommand implements Command {
 
         if (action.equals("add")) {
             if (storage.getLoggedUserRole() == null || storage.getLoggedUserRole() != AccessLevel.ADMIN) {
-                return "Access denied.";
+                throw new NoPermissionException("Access denied.");
             }
             if (args.length < 3) return "No data provided.";
 
@@ -138,13 +140,13 @@ public class BooksCommand implements Command {
 
         if (action.equals("remove") && args.length > 2) {
             if (storage.getLoggedUserRole() != AccessLevel.ADMIN) {
-                return "Access denied.";
+                throw new NoPermissionException("Access denied.");
             }
             boolean removed = storage.getAllBooks().removeIf(b -> b.getId().equals(args[2]));
             return removed ? "Book removed." : "Book not found.";
         }
 
-        return "Invalid command.";
+        throw new InvalidCommandException("Invalid command.");
     }
 
     /**
