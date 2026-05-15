@@ -24,7 +24,7 @@ public class UsersCommand implements Command {
      */
     @Override
     public String execute(String[] args) {
-        if (!"admin".equals(storage.getLoggedUser())) {
+        if (storage.getLoggedUserRole() != AccessLevel.ADMIN) {
             throw new NoPermissionException("Access denied.");
         }
 
