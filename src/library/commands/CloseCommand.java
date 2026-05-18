@@ -17,6 +17,7 @@ public class CloseCommand implements Command {
 
     /**
      * Closes the file and returns a message.
+     * * @return result message
      */
     @Override
     public String execute(String[] args) {

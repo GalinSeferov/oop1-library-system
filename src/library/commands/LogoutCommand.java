@@ -8,10 +8,17 @@ import library.repository.FileRepository;
 public class LogoutCommand implements Command {
     private FileRepository storage;
 
+    /**
+     * @param storage the repository used to check credentials
+     */
     public LogoutCommand(FileRepository storage) {
         this.storage = storage;
     }
 
+    /**
+     * Logs out the current user.
+     * @return result message
+     */
     @Override
     public String execute(String[] args) {
         if (storage.getLoggedUser() == null) {

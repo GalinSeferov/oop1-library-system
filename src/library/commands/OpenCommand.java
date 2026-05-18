@@ -8,10 +8,20 @@ import library.repository.FileRepository;
 public class OpenCommand implements Command{
     private FileRepository storage;
 
+    /**
+     * @param storage the repository used to open the file
+     */
+
     public OpenCommand(FileRepository storage){
         this.storage = storage;
 
     }
+
+    /**
+     * Opens the file and returns a message.
+     * @param args the file name to open
+     * @return result message
+     */
 
     @Override
     public String execute(String[] args) {

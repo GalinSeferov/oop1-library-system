@@ -29,6 +29,7 @@ public class BooksCommand implements Command {
     /**
      * Executes a book command based on the given arguments.
      *
+     * @param args the words the user typed as a command
      * @return a message with the result of the command
      */
     @Override

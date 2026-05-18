@@ -8,10 +8,17 @@ import library.repository.FileRepository;
 public class LoginCommand implements Command {
     private FileRepository storage;
 
+    /**
+     * @param storage the repository used to check credentials
+     */
     public LoginCommand(FileRepository storage) {
         this.storage = storage;
     }
-
+    /**
+     * Logs in the user if the credentials are correct.
+     * @param args username and password
+     * @return result message
+     */
     @Override
     public String execute(String[] args) {
         if (storage.getCurrentFile() == null) {
